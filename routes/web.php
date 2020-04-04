@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 // サイトトップへのルーティング
 Route::get('/', function () {
     return view('topMenu');
-});
+})->name('top');
 
 // クイズ管理メニューへのルーティング
 Route::get('/quizmanage', function () {
@@ -31,5 +31,8 @@ Route::get('/playquiz', function () {
 
 // クイズ登録へのルーティング
 Route::get('/quizmanage/addquiz', function () {
-    return view('addquiz/addquiz');
+    return view('quizmanage/addquiz/addquiz');
 })->name('addquiz');
+
+// クイズ登録処理とクイズ登録画面へのルーティング
+Route::post('/quizmanage/addquiz/addquiz', 'quizManageController@addQuiz');
