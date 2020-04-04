@@ -13,6 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+// サイトトップへのルーティング
 Route::get('/', function () {
-    return view('welcome');
+    return view('topMenu');
 });
+
+// クイズ管理メニューへのルーティング
+Route::get('/questionmanager', function () {
+    return view('menus/quizManage');
+})->name('quizManage');
+
+// クイズゲームへのルーティング
+Route::get('/playquiz', function () {
+    return view('game/game');
+})->name('playquiz');
