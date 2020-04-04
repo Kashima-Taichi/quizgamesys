@@ -20,11 +20,16 @@ Route::get('/', function () {
 });
 
 // クイズ管理メニューへのルーティング
-Route::get('/questionmanager', function () {
-    return view('menus/quizManage');
+Route::get('/quizmanage', function () {
+    return view('quizmanage/quizManage');
 })->name('quizManage');
 
 // クイズゲームへのルーティング
 Route::get('/playquiz', function () {
     return view('game/game');
 })->name('playquiz');
+
+// クイズ登録へのルーティング
+Route::get('/quizmanage/addquiz', function () {
+    return view('addquiz/addquiz');
+})->name('addquiz');
