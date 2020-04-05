@@ -1,0 +1,13 @@
+/* Laravelのデフォルトのulタグは”・”を出力するが、それを消すのが下記のソース */
+ul {
+    list-style: none;
+}
+
+.page-item {
+    font-size: 15px;
+}
+
+/* 下のCSSでLaravelのページネーションのスタイルを横並びにすることが出来る */
+.pagination li {
+    display: inline-block;
+}

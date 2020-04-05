@@ -17,6 +17,7 @@
                 </div>
                 <div class="links">
                     <a href="<?php echo route('addquiz'); ?>" id="link">クイズを登録する</a>
+                    <a href="<?php echo route('refquiz'); ?>" id="link">登録したクイズを参照する</a>
                 </div>
             </div>
         </div>

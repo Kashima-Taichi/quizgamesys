@@ -18,4 +18,10 @@ class quizManageController extends Controller
         $question->fill($formData)->save();
         return view('quizmanage/addquiz/addquiz');
     }
+
+    // 登録したクイズの参照処理
+    public function referenceQuiz() {
+        $questions = Question::paginate(6);
+        return view('quizmanage/refquiz/referenceQuiz', ['questions' => $questions]);
+    }
 }
