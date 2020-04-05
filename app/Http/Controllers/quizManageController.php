@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Question;
+use Log;
 
 class quizManageController extends Controller
 {
@@ -55,6 +56,21 @@ class quizManageController extends Controller
         $toBeDeletedQuiz = Question::find($id);
         Question::destroy($id);
         return view('quizmanage/refquiz/individual/del/deleteDone', ['toBeDeletedQuiz' => $toBeDeletedQuiz]);
+    }
+
+    // 初回のクイズを出題
+    public function outPutQuiz() {
+        $randomQuiz = Question::inRandomOrder()->limit(1)->first();
+        return view('game/game', ['randomQuiz' => $randomQuiz]);
+    }
+
+    // クイズの答え合わせと2回目以降の出題
+    public function outPutQuizAfter(Request $request) {
+        Log::debug($request);
+        // 答え合わせ(チェックボックスを使うと、hidden属性はチェックボックスの属性値と異なるものを使用しないといけない)
+        $quizQuestioned = Question::where('id', $requet->id)->first();
+        $quizQuestioned->correct === 
+
     }
 }
 

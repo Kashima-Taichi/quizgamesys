@@ -25,9 +25,10 @@ Route::get('/quizmanage', function () {
 })->name('quizManage');
 
 // クイズゲームへのルーティング
-Route::get('/playquiz', function () {
-    return view('game/game');
-})->name('playquiz');
+Route::get('/playquiz', 'quizManageController@outPutQuiz')->name('playquiz');
+
+// クイズゲームプレイのルーティング
+Route::post('/playquiz', 'quizManageController@outPutQuizAfter');
 
 // クイズ登録へのルーティング
 Route::get('/quizmanage/addquiz', function () {
@@ -41,13 +42,13 @@ Route::post('/quizmanage/addquiz/addquiz', 'quizManageController@addQuiz');
 Route::get('/quizmanage/refquiz/referencequiz', 'quizManageController@referenceQuiz')->name('refquiz');
 
 // 登録をした個別のクイズを参照するルーティング
-Route::get('quizmanage/refquiz/individual/refIndividualQuiz/{id}', 'quizManageController@refIndividualQuiz');
+Route::get('/quizmanage/refquiz/individual/refIndividualQuiz/{id}', 'quizManageController@refIndividualQuiz');
 
 // 登録をした個別のクイズを修正しにいくルーティング
-Route::get('quizmanage/refquiz/individual/refIndividualQuiz/edit/editQuiz/{id}', 'quizManageController@prepareEditQuiz');
+Route::get('/quizmanage/refquiz/individual/refIndividualQuiz/edit/editQuiz/{id}', 'quizManageController@prepareEditQuiz');
 
 // クイズ修正完了のルーティング
-Route::post('quizmanage/refquiz/individual/edit/editQuiz/editDoneQuiz', 'quizManageController@editQuizDone');
+Route::post('/quizmanage/refquiz/individual/edit/editQuiz/editDoneQuiz', 'quizManageController@editQuizDone');
 
 // クイズ削除のルーティング
-Route::get('quizmanage/refquiz/individual/del/{id}', 'quizManageController@deleteQuiz');
+Route::get('/quizmanage/refquiz/individual/del/{id}', 'quizManageController@deleteQuiz');
