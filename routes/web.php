@@ -39,3 +39,15 @@ Route::post('/quizmanage/addquiz/addquiz', 'quizManageController@addQuiz');
 
 // 登録したクイズを参照する画面へのルーティング
 Route::get('/quizmanage/refquiz/referencequiz', 'quizManageController@referenceQuiz')->name('refquiz');
+
+// 登録をした個別のクイズを参照するルーティング
+Route::get('quizmanage/refquiz/individual/refIndividualQuiz/{id}', 'quizManageController@refIndividualQuiz');
+
+// 登録をした個別のクイズを修正しにいくルーティング
+Route::get('quizmanage/refquiz/individual/refIndividualQuiz/edit/editQuiz/{id}', 'quizManageController@prepareEditQuiz');
+
+// クイズ修正完了のルーティング
+Route::post('quizmanage/refquiz/individual/edit/editQuiz/editDoneQuiz', 'quizManageController@editQuizDone');
+
+// クイズ削除のルーティング
+Route::get('quizmanage/refquiz/individual/del/{id}', 'quizManageController@deleteQuiz');

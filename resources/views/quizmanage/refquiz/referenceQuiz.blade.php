@@ -21,7 +21,7 @@
     </tr>
         @foreach ($questions as $question)
             <tr>
-                <td>{{ $question->id }}</td>
+                <td><a id="link" href="{{ action('quizManageController@refIndividualQuiz', $question->id) }}"> {{ $question->id }}</a></td>
                 <td>{{ $question->question }}</td>
                 <td>{{ $question->option1 }}</td>
                 <td>{{ $question->option2 }}</td>
