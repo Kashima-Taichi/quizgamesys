@@ -1,0 +1,8 @@
+.question, .option1, .option2, .option3, .option4 {
+    width: 300px;
+}
+
+.option1, .option2, .option3, .option4 {
+    width: 180px;
+}
+

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('/style/common.css') }}">
+    <link rel="stylesheet" href="{{ asset('/styles/common.css') }}">
+    <link rel="stylesheet" href="{{ asset('/styles/addquiz.css') }}">
     <title>クイズを登録する</title>
 </head>
 <body>
@@ -15,7 +16,7 @@
     <form action="/quizmanage/addquiz/addquiz" method="post">
         @csrf
         <h4>クイズの問題を入力してください</h4>
-        <input type="text" id="question" name="question" class="question">
+        <textarea type="text" id="question" name="question" class="question"></textarea>
         <br>
         <p>選択肢1を入力して下さい</p>
         <input type="text" id="option1" name="option1" class="option1">
@@ -30,7 +31,6 @@
         <input type="text" id="option4" name="option4" class="option4">
         <br>
         <p>答えを選択して下さい</p>
-        <br>
         <select class="correct" name="correct" id="correct">
             <option value="select">選択してください</option>
             <option value="option1">選択肢1</option>
@@ -41,7 +41,6 @@
         <br>
         <br>
         <input class="submit" id="submit" type="submit" value="クイズを登録する">
-        <br>
         <br>
         <div class="display-result">
             {{ $msg ?? '' }}
