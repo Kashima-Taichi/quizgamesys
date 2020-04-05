@@ -9,10 +9,10 @@
 </head>
 <body>
     <div class="points">
-        {{ $correct ?? '' }}
+        {{ $correctPoints }}
     </div>
     <div class="points">
-        {{ $incorrect ?? '' }}
+        {{ $inCorrectPoints }}
     </div>
     <div class="question">
         <p>{{ $randomQuiz->question }}</p>
@@ -34,6 +34,9 @@
         </div>
             <input type="submit" value="回答を送信する！">
             <input type="hidden" name="id" value="{{ $randomQuiz->id }}">
+            <input type="hidden" name="correctPoints" value="{{ $correctPoints }}">
+            <input type="hidden" name="inCorrectPoints" value="{{ $inCorrectPoints }}">
+            <input type="hidden" name="questionedIds" value="{{ $questionedIds }}">
         </form>
     </div>
 </body>

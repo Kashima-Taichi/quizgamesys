@@ -61,17 +61,22 @@ class quizManageController extends Controller
     // 初回のクイズを出題
     public function outPutQuiz() {
         $randomQuiz = Question::inRandomOrder()->limit(1)->first();
-        return view('game/game', ['randomQuiz' => $randomQuiz]);
+        $correctPoints = 0;
+        $inCorrectPoints = 0;
+        $questionedIds = $randomQuiz->id . ',';
+        return view('game/game', ['randomQuiz' => $randomQuiz, 'correctPoints' => $correctPoints, 'inCorrectPoints' => $inCorrectPoints, 'questionedIds' => $questionedIds]);
     }
 
-    // クイズの答え合わせと2回目以降の出題
+    //クイズの答え合わせと2回目以降の出題
     public function outPutQuizAfter(Request $request) {
         Log::debug($request);
         // 答え合わせ(チェックボックスを使うと、hidden属性はチェックボックスの属性値と異なるものを使用しないといけない)
-        $quizQuestioned = Question::where('id', $requet->id)->first();
-        $quizQuestioned->correct === 
+        $quizQuestioned = Question::where('id', $request->id)->first();
+        $quizQuestioned->correct === $request->answer ? $request->correctPoints++ : $request->inCorrectPoints++;
+        Log::debug($request->correctPoints);
+        Log::debug($request->inCorrectPoints);
+        $pastQuestioned[] = 
+        $request->questionedIds
 
     }
 }
-
-?>
