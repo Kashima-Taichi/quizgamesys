@@ -63,20 +63,32 @@ class quizManageController extends Controller
         $randomQuiz = Question::inRandomOrder()->limit(1)->first();
         $correctPoints = 0;
         $inCorrectPoints = 0;
-        $questionedIds = $randomQuiz->id . ',';
-        return view('game/game', ['randomQuiz' => $randomQuiz, 'correctPoints' => $correctPoints, 'inCorrectPoints' => $inCorrectPoints, 'questionedIds' => $questionedIds]);
+        $questionedIds = $randomQuiz->id;
+        return view('game/game', ['randomQuiz' => $randomQuiz, 
+        'correctPoints' => $correctPoints, 
+        'inCorrectPoints' => $inCorrectPoints, 
+        'questionedIds' => $questionedIds]);
     }
 
     //クイズの答え合わせと2回目以降の出題
     public function outPutQuizAfter(Request $request) {
-        Log::debug($request);
         // 答え合わせ(チェックボックスを使うと、hidden属性はチェックボックスの属性値と異なるものを使用しないといけない)
         $quizQuestioned = Question::where('id', $request->id)->first();
         $quizQuestioned->correct === $request->answer ? $request->correctPoints++ : $request->inCorrectPoints++;
-        Log::debug($request->correctPoints);
-        Log::debug($request->inCorrectPoints);
-        $pastQuestioned[] = 
-        $request->questionedIds
+        $pastQuestionedIds[] = $request->questionedIds; 
+        Log::debug($pastQuestionedIds);
+        if (count($pastQuestionedIds) > 7) { array_splice($pastQuestionedIds[], 0, 1); }
+        do { $randomQuiz = Question::inRandomOrder()->limit(1)->first(); } while (in_array($randomQuiz->id, $pastQuestionedIds) === true);
+        // pastQuestionedIdsをカンマ区切りで配列にする　関数内でずっとカンマ区切りの変数になっている
+        $pastQuestionedIds[] = $randomQuiz->id;
+        Log::debug($pastQuestionedIds);
+        // こいつを配列化して
+        $idsForView = implode(',', $pastQuestionedIds);
+        return view('game/game', ['randomQuiz' => $randomQuiz,
+        'correctPoints' => $request->correctPoints, 
+        'inCorrectPoints' => $request->inCorrectPoints, 
+        'questionedIds' => $idsForView
+        ]);
 
     }
 }
