@@ -73,17 +73,37 @@ class quizManageController extends Controller
     //クイズの答え合わせと2回目以降の出題
     public function outPutQuizAfter(Request $request) {
         // 答え合わせ(チェックボックスを使うと、hidden属性はチェックボックスの属性値と異なるものを使用しないといけない)
+        // 出題したクイズを抜く
         $quizQuestioned = Question::where('id', $request->id)->first();
+
+        $idsForView = $request->questionedIds;
+
+        // 答え合わせをして、ポイント計算
         $quizQuestioned->correct === $request->answer ? $request->correctPoints++ : $request->inCorrectPoints++;
-        $pastQuestionedIds[] = $request->questionedIds; 
+
+        // 文字数調整
+        Log::debug(strlen($idsForView));
+        if (strlen($idsForView) >= 14) {
+            // もし最初の文字列が , なら3文字削る
+            // これは2桁のクイズidと文字列調整時のバイト数の関係による
+            $cut = 2;
+            $idsForView = substr($idsForView, $cut, strlen($idsForView) - $cut);
+        }
+
+        // idをまとめた変数をカンマ区切りで配列にする
+        $pastQuestionedIds = explode(',', $idsForView);
         Log::debug($pastQuestionedIds);
-        if (count($pastQuestionedIds) > 7) { array_splice($pastQuestionedIds[], 0, 1); }
-        do { $randomQuiz = Question::inRandomOrder()->limit(1)->first(); } while (in_array($randomQuiz->id, $pastQuestionedIds) === true);
-        // pastQuestionedIdsをカンマ区切りで配列にする　関数内でずっとカンマ区切りの変数になっている
-        $pastQuestionedIds[] = $randomQuiz->id;
-        Log::debug($pastQuestionedIds);
-        // こいつを配列化して
-        $idsForView = implode(',', $pastQuestionedIds);
+
+        // 条件を満たさない間、クイズを抜き続ける
+        do { 
+            $randomQuiz = Question::inRandomOrder()->limit(1)->first();
+            echo 'loop!!'; 
+        } while (in_array($randomQuiz->id, $pastQuestionedIds) === true);
+
+        $idsForView .= ',' . $randomQuiz->id;
+        Log::debug($idsForView);
+
+        // 抜いたクイズをviewへ
         return view('game/game', ['randomQuiz' => $randomQuiz,
         'correctPoints' => $request->correctPoints, 
         'inCorrectPoints' => $request->inCorrectPoints, 
