@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('/styles/common.css') }}">
-    <link rel="stylesheet" href="{{ asset('/styles/addquiz.css') }}">
+    <link rel="stylesheet" href="{{ asset('/styles/playQuiz.css') }}">
     <title>クイズゲームをする</title>
 </head>
 <body>
-    <div class="points">
-        {{ $correctPoints }}
+    <div class="correctPoints">
+        正解：{{ $correctPoints }}
     </div>
-    <div class="points">
-        {{ $inCorrectPoints }}
+    <div class="inCorrectPoints">
+        不正解：{{ $inCorrectPoints }}
     </div>
     <div class="question">
         <p>{{ $randomQuiz->question }}</p>
@@ -39,5 +39,6 @@
             <input type="hidden" name="questionedIds" value="{{ $questionedIds }}">
         </form>
     </div>
+    @include('components.linkToTop')
 </body>
 </html>

@@ -72,7 +72,6 @@ class quizManageController extends Controller
 
     //クイズの答え合わせと2回目以降の出題
     public function outPutQuizAfter(Request $request) {
-        // 答え合わせ(チェックボックスを使うと、hidden属性はチェックボックスの属性値と異なるものを使用しないといけない)
         // 出題したクイズを抜く
         $quizQuestioned = Question::where('id', $request->id)->first();
 
@@ -82,26 +81,22 @@ class quizManageController extends Controller
         $quizQuestioned->correct === $request->answer ? $request->correctPoints++ : $request->inCorrectPoints++;
 
         // 文字数調整
-        Log::debug(strlen($idsForView));
         if (strlen($idsForView) >= 14) {
-            // もし最初の文字列が , なら3文字削る
-            // これは2桁のクイズidと文字列調整時のバイト数の関係による
             $cut = 2;
             $idsForView = substr($idsForView, $cut, strlen($idsForView) - $cut);
         }
 
         // idをまとめた変数をカンマ区切りで配列にする
         $pastQuestionedIds = explode(',', $idsForView);
-        Log::debug($pastQuestionedIds);
+        //Log::debug($pastQuestionedIds);
 
         // 条件を満たさない間、クイズを抜き続ける
         do { 
             $randomQuiz = Question::inRandomOrder()->limit(1)->first();
-            echo 'loop!!'; 
         } while (in_array($randomQuiz->id, $pastQuestionedIds) === true);
 
         $idsForView .= ',' . $randomQuiz->id;
-        Log::debug($idsForView);
+        //Log::debug($idsForView);
 
         // 抜いたクイズをviewへ
         return view('game/game', ['randomQuiz' => $randomQuiz,
@@ -109,6 +104,5 @@ class quizManageController extends Controller
         'inCorrectPoints' => $request->inCorrectPoints, 
         'questionedIds' => $idsForView
         ]);
-
     }
 }
